@@ -1,6 +1,6 @@
 # Mobile Screen Test
 
-Simulador de celular para o Chrome. A branch `extensao` tem só a extensão pronta para carregar; o código-fonte fica na `main`.
+Simulador de celular para o Chrome. Este repositório tem só a extensão pronta para carregar.
 
 ## Instalar (uma vez)
 
@@ -12,7 +12,7 @@ Precisa do [Git](https://git-scm.com/downloads) ou do [GitHub Desktop](https://d
 git clone --branch extensao --single-branch https://github.com/gabriieljoao/mobile-screen-test.git ~/extensoes/mobile-screen-test
 ```
 
-**Pelo GitHub Desktop:** File → Clone repository → URL `https://github.com/gabriieljoao/mobile-screen-test`, escolha uma pasta fixa (por exemplo `Documentos/extensoes/mobile-screen-test`). Depois, em **Current branch**, troque para `extensao`.
+**Pelo GitHub Desktop:** File → Clone repository → URL `https://github.com/gabriieljoao/mobile-screen-test`, escolha uma pasta fixa (por exemplo `Documentos/extensoes/mobile-screen-test`).
 
 Em seguida, no Chrome:
 
