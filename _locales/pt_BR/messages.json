@@ -1,0 +1,20 @@
+{
+  "nome": {
+    "message": "Mobile Screen Test"
+  },
+  "descricao": {
+    "message": "Veja e teste qualquer site como num celular, dentro da aba."
+  },
+  "cmdAlternar": {
+    "message": "Ligar ou desligar o simulador nesta aba"
+  },
+  "cmdCapturar": {
+    "message": "Capturar a tela do aparelho"
+  },
+  "cmdGirar": {
+    "message": "Girar o aparelho"
+  },
+  "menuVerComoCelular": {
+    "message": "Ver como celular"
+  }
+}

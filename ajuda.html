@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ajuda — Mobile Screen Test</title>
+  <script type="module" crossorigin src="/chunks/ajuda-D6Ar08Dm.js"></script>
+  <link rel="modulepreload" crossorigin href="/chunks/preferencias-DCHEQdKO.js">
+  <link rel="modulepreload" crossorigin href="/chunks/tema-BcBRGs8O.js">
+  <link rel="stylesheet" crossorigin href="/assets/tema-C7Uo_PWi.css">
+</head>
+<body>
+<main class="pagina">
+  <h1>Mobile Screen Test</h1>
+  <p class="sub">Veja e teste qualquer site como num celular, dentro da própria aba.</p>
+
+  <div class="cartao">
+    <ul class="indice" aria-label="Nesta página">
+      <li><a href="#usar">Como usar</a></li>
+      <li><a href="#limites">Limites</a></li>
+      <li><a href="#seguranca">Segurança</a></li>
+      <li><a href="#problemas">Quando algo não funciona</a></li>
+    </ul>
+
+    <h2 id="usar">Como usar</h2>
+    <ol>
+      <li>Abra o site e clique no ícone da extensão (ou <kbd>Alt+Shift+M</kbd>, ou botão direito → <em>Ver como celular</em>).</li>
+      <li>Troque o aparelho pelo nome dele na barra; a estrela marca favoritos.</li>
+      <li>Arraste com o mouse para rolar como o dedo. Toques, <code>pointer</code> e <code>hover</code> seguem o aparelho.</li>
+      <li>O <strong>+</strong> adiciona até 4 aparelhos lado a lado. Com a sincronia ligada, rolar, clicar, digitar e navegar num repete nos outros.</li>
+      <li><strong>Capturar</strong> (<kbd>Alt+Shift+S</kbd>): com moldura, só o site ou página inteira.</li>
+      <li>Para sair, clique no ícone de novo ou no ✕ da barra.</li>
+    </ol>
+    <table>
+      <tr><td><kbd>Alt+Shift+M</kbd></td><td>Ligar ou desligar nesta aba</td></tr>
+      <tr><td><kbd>Alt+Shift+R</kbd></td><td>Girar o aparelho</td></tr>
+      <tr><td><kbd>Alt+Shift+S</kbd></td><td>Capturar</td></tr>
+      <tr><td><kbd>Ctrl +</kbd> / <kbd>Ctrl −</kbd></td><td>Aumentar ou diminuir o aparelho na tela</td></tr>
+    </table>
+    <p class="pequeno">Os atalhos podem ser trocados em <code>chrome://extensions/shortcuts</code>.</p>
+
+    <h2 id="limites">Limites</h2>
+    <p>O site vê o tamanho de tela, o User-Agent, a densidade, a orientação, o toque e as media queries do aparelho escolhido. Mesmo assim, não é um celular de verdade:</p>
+    <ul>
+      <li><strong>O motor é sempre o do Chrome.</strong> Bugs exclusivos do Safari (WebKit) não aparecem. Antes de publicar, confira num iPhone real.</li>
+      <li><code>:hover</code> no CSS ainda reage ao mouse; só as regras dentro de <code>@media (hover: …)</code> mudam.</li>
+      <li><strong>Áreas seguras</strong> (botão Ambiente): as medidas do recorte e da barra de gestos são estimadas pela moldura. <code>env(safe-area-inset-*)</code> só recebe o valor do aparelho com <code>viewport-fit=cover</code>, como no celular; dentro de shadow DOM e de folhas de outro domínio sem CORS ele continua zero.</li>
+      <li><strong>Tema, movimento e contraste</strong> mudam as media queries do site (<code>prefers-color-scheme</code>, <code>prefers-reduced-motion</code>, <code>prefers-contrast</code>). Barras de rolagem, campos de formulário e o fundo padrão seguem o tema do computador. O "Texto dinâmico" do iOS não é simulado.</li>
+      <li><strong>Rede lenta:</strong> só as chamadas feitas por código (<code>fetch</code> e <code>XMLHttpRequest</code>) ficam lentas. HTML, imagens, CSS, scripts e fontes carregam na velocidade normal; o perfil serve para testar telas de carregamento e tempo-limite, não a abertura da página. XHR síncrono e WebSocket não ficam lentos.</li>
+      <li><strong>Offline:</strong> <code>fetch</code> e XHR falham e <code>navigator.onLine</code> vira <code>false</code> só naquele aparelho. Imagens e outros arquivos novos só deixam de carregar quando todos os aparelhos da aba estão offline.</li>
+      <li><code>window.top !== window</code> continua detectável.</li>
+      <li>Em comparação, os cabeçalhos HTTP usam o User-Agent do aparelho <strong>principal</strong>; os outros só mudam no JavaScript. Trocar o principal vale a partir da próxima navegação.</li>
+      <li>A sincronia só funciona entre janelas no mesmo site e rola só a página, não áreas roláveis internas. Campos de senha nunca são repetidos.</li>
+      <li>Iframes dentro do site recebem o User-Agent nos cabeçalhos, mas não os ajustes de JavaScript.</li>
+      <li>Folhas de estilo de outro domínio (CDN) só seguem <code>pointer</code>/<code>hover</code> com a opção <em>CSS de outros domínios</em> ligada nas Configurações. Ela pode atrasar a primeira pintura.</li>
+      <li>Service workers novos não são registrados dentro do simulador (as requisições deles sairiam sem o User-Agent do aparelho). Veja <a href="#service-worker">abaixo</a> se o site já tiver um.</li>
+      <li>Sites com desafio anti-robô (Cloudflare, reCAPTCHA, hCaptcha, DataDome) recebem o User-Agent real nos domínios do desafio, para não entrar em laço de verificação.</li>
+      <li>A captura sai na resolução da tela do seu computador (numa tela 2×, sai em 2×). "Página inteira" para em 16.000 px e, em comparação, captura só o aparelho principal.</li>
+    </ul>
+
+    <h2 id="seguranca">Segurança e privacidade</h2>
+    <div class="alerta">
+      <p><strong>Não use o simulador em abas de banco, e-mail ou painéis sensíveis.</strong></p>
+      <p style="margin:0">Para mostrar qualquer site dentro da moldura, a extensão desliga, só naquela aba, as proteções <code>X-Frame-Options</code> e <code>Content-Security-Policy</code> do site. Elas voltam ao desativar ou fechar a aba.</p>
+    </div>
+    <ul style="margin-top:12px">
+      <li>Nada sai do seu computador: sem servidor próprio, sem analytics, sem login. A extensão só fala com os sites que você abre.</li>
+      <li>As mudanças de cabeçalho valem só nas abas simuladas.</li>
+      <li>Os scripts que rodam nas páginas saem na hora se a página não for uma janela do simulador, e não leem nem enviam dados.</li>
+      <li>Com <em>CSS de outros domínios</em> ligado, as folhas de estilo são baixadas sem cookies nem login.</li>
+    </ul>
+
+    <h2 id="problemas">Quando algo não funciona</h2>
+    <p><strong>O ícone não faz nada / aparece um aviso.</strong> O Chrome não deixa extensões entrarem em páginas internas (<code>chrome://</code>), na Chrome Web Store nem em arquivos locais. Para um arquivo, sirva a pasta: <code>npx serve .</code> ou <code>python3 -m http.server</code>, e abra o endereço <code>http://localhost:…</code>.</p>
+    <p id="service-worker"><strong>Aviso de service worker.</strong> O site já tinha um service worker ativo antes do simulador, e as requisições dele saem com o User-Agent do computador. O botão <em>Desativar service worker deste site</em> remove o registro e recarrega a janela; o site registra de novo na próxima visita fora do simulador.</p>
+    <p><strong>A página fica em verificação de robô.</strong> Adicione o domínio do desafio em Configurações → Fidelidade → domínios de desafio anti-robô.</p>
+    <p><strong>O site parece desktop.</strong> Alguns sites decidem pelo servidor só na primeira visita; recarregue a página dentro do simulador.</p>
+  </div>
+</main>
+</body>
+</html>
